@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      items: [{ id: 1, title: "wake up" }, { id: 2, title: "wash face" }],
+      items: [],
       id: uuid(),
       item: "",
       editItem: false
@@ -18,11 +18,32 @@ class App extends Component {
   }
 
   handleChange = e => {
-    console.log("handleChange log");
+    this.setState({
+      item: e.target.value
+    });
   };
 
   handleSubmit = e => {
-    console.log("handleSubmit log");
+    e.preventDefault();
+
+    const { id, item, items } = this.state;
+
+    const newItem = {
+      id,
+      title: item
+    };
+
+    const updatedItems = [...items, newItem];
+
+    this.setState(
+      {
+        items: updatedItems,
+        item: "",
+        id: uuid(),
+        editItem: false
+      },
+      () => console.log(this.state)
+    );
   };
 
   clearList = () => {
